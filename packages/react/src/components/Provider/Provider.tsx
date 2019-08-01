@@ -172,11 +172,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     }
 
     return (
-      <RendererProvider
-        renderer={outgoingContext.renderer}
-        target={target}
-        {...{ rehydrate: false }}
-      >
+      <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false, target }}>
         <ThemeProvider theme={outgoingContext}>
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
             {children}
