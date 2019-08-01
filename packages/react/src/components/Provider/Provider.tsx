@@ -1,9 +1,9 @@
-import { IStyle } from '@stardust-ui/fela'
+import { IStyle } from 'fela'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
-import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
+import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import { felaRenderer, ChildrenComponentProps } from '../../lib'
