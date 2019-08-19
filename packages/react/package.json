@@ -9,7 +9,6 @@
     "@stardust-ui/react-component-event-listener": "^0.36.0",
     "@stardust-ui/react-component-nesting-registry": "^0.36.0",
     "@stardust-ui/react-component-ref": "^0.36.0",
-    "@stardust-ui/react-fela": "^10.6.2",
     "@stardust-ui/react-proptypes": "^0.36.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.10",
