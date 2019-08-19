@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
@@ -161,7 +160,7 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
+  const { rtl = false, disableAnimations = false, renderer = null } = context || {}
 
   const {
     siteVariables = {
@@ -213,7 +212,9 @@ const renderComponent = <P extends {}>(
 
   const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
-  const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
+  const classes: ComponentSlotClasses = renderer
+    ? getClasses(renderer, mergedStyles, styleParam)
+    : {}
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {

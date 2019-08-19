@@ -1,6 +1,28 @@
-import felaRenderer from './felaRenderer'
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
+import { Renderer } from '../themes/types'
+import { createRenderer } from './felaRenderer'
 import mergeThemes from './mergeThemes'
+
+const registeredRenderers = new WeakMap<Document, Renderer>()
+
+export const mergeRenderers = (
+  current: Renderer,
+  next?: Renderer,
+  target: Document = document,
+): Renderer => {
+  if (next) {
+    return next
+  }
+
+  if (registeredRenderers.has(target)) {
+    return registeredRenderers.get(target)
+  }
+
+  const createdRenderer = createRenderer()
+  registeredRenderers.set(target, createdRenderer)
+
+  return createdRenderer
+}
 
 export const mergeBooleanValues = (target, ...sources) => {
   return sources.reduce((acc, next) => {
@@ -21,7 +43,6 @@ const mergeProviderContexts = (
       icons: {},
       animations: {},
     },
-    renderer: felaRenderer,
     rtl: false,
     disableAnimations: false,
     originalThemes: [],
@@ -42,9 +63,7 @@ const mergeProviderContexts = (
 
       // Use provided renderer if it is defined
       acc.target = next.target || acc.target
-
-      // Use provided renderer if it is defined
-      acc.renderer = next.renderer || acc.renderer
+      acc.renderer = mergeRenderers(acc.renderer, next.renderer, acc.target)
 
       // Latest disableAnimations value wins
       const mergedDisableAnimations = mergeBooleanValues(
