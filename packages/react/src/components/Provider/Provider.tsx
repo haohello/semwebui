@@ -5,7 +5,7 @@ import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
-import { ChildrenComponentProps } from '../../lib'
+import { ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -146,6 +146,9 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   componentDidMount() {
     this.renderFontFaces(this.outgoingContext.renderer)
+    if (this.props.target) {
+      setUpWhatInput(this.props.target)
+    }
   }
 
   render() {
