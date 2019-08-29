@@ -135,15 +135,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     })
   }
 
-  renderStaticStylesOnce = (renderer: Renderer, mergedTheme: ThemePrepared) => {
-    const { staticStyles } = this.props.theme
-
-    if (!this.staticStylesRendered && staticStyles) {
-      this.renderStaticStyles(renderer, mergedTheme)
-      this.staticStylesRendered = true
-    }
-  }
-
   componentDidMount() {
     this.renderFontFaces(this.outgoingContext.renderer)
     if (this.props.target) {
@@ -178,7 +169,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     this.outgoingContext = mergeContexts(incomingContext, inputContext)
 
-    this.renderStaticStylesOnce(this.outgoingContext.renderer, this.outgoingContext.theme)
+    this.renderStaticStylesOnce(this.outgoingContext.theme)
 
     const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
     // only add dir attribute for top level provider or when direction changes from parent to child
@@ -201,6 +192,14 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         </ThemeProvider>
       </RendererProvider>
     )
+  }
+
+  renderStaticStylesOnce = (mergedTheme: ThemePrepared) => {
+    const { staticStyles } = this.props.theme
+    if (!this.staticStylesRendered && staticStyles) {
+      this.renderStaticStyles(this.outgoingContext.renderer, mergedTheme)
+      this.staticStylesRendered = true
+    }
   }
 }
 
